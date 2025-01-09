@@ -1,0 +1,28 @@
+import os
+import sys
+
+sys.path.insert(1, os.path.dirname(os.path.dirname(__file__)))
+
+import unittest
+from questions import *
+
+class TestQuestions(unittest.TestCase):
+    def test_like_question(self):
+        q = Question("?", 1234)
+        q.like_question(1234)
+        q.like_question(2345)
+        q.like_question(3456)
+        self.assertEqual(q.get_like_count(), 2)
+    
+    def test_get_questions_sorted(self):
+        q1 = Question("?", 1111)
+        q2 = Question("??", 2222)
+        q3 = Question("???", 3333)
+        qs = Questions()
+        qs.add_question(q1)
+        qs.add_question(q2)
+        qs.add_question(q3)
+        q2.like_question(1111)
+        q3.like_question(1111)
+        q3.like_question(2222)
+        self.assertEqual(qs.get_questions_sorted(), [q3, q2, q1])
