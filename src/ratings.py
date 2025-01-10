@@ -5,13 +5,18 @@ class Rating():
     
     def update_score(self, new_score):
         self.score = new_score
+    
+    def to_tuple(self):
+        return (self.score, self.user_id)
 
     def __repr__(self):
         return f"Score: {self.score}, User: {self.user_id}"
 
 class Ratings():
-    def __init__(self):
+    def __init__(self, ratings=None):
         self.ratings = []
+        if ratings:
+            self.ratings = ratings
         
     def add_rating(self, rating):
         if rating not in self.ratings:
@@ -33,3 +38,6 @@ class Ratings():
     
     def remove_user_rating(self, user_id):
         self.ratings = list(filter(lambda rating: rating.user_id != user_id, self.ratings))
+    
+    def to_list(self):
+        return list(map(lambda r: r.to_tuple(), self.ratings))
